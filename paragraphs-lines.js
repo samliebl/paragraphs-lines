@@ -1,9 +1,8 @@
-// paragraphs-lines.js
-
 export function paragraphsLines(textInput) {
-    const paragraphs = textInput.trim().split(/\n\s*\n/); // Split into paragraphs
-
-    const title = paragraphs[0].split('\n')[0]; // First line as title
+    // Split into paragraphs
+    const paragraphs = textInput.trim().split(/\n\s*\n/);
+    // First line as title
+    const title = paragraphs[0].split('\n')[0];
     const titleWordCount = title.split(/\s+/).length;
     const titleCharacterLength = title.length;
 
