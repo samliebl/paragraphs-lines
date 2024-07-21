@@ -1,0 +1,14 @@
+{
+  "name": "paragraphs-lines",
+  "version": "1.0.0",
+  "description": "please write ESM module format JS script that takes a text input `textInput`",
+  "main": "paragraphs-lines.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
