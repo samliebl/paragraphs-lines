@@ -1,14 +1,20 @@
 {
   "name": "paragraphs-lines",
   "version": "1.0.0",
-  "description": "please write ESM module format JS script that takes a text input `textInput`",
+  "description": "Module that processes text and allows for analysis thereof by paragraphs and lines.",
   "main": "paragraphs-lines.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "paragraph",
+    "line",
+    "text analysis",
+    "text processing",
+    "paragraphs"
+  ],
+  "author": "Sam Liebl <https://samliebl.com>",
+  "license": "MIT"
 }
