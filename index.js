@@ -3,7 +3,7 @@ import fs from 'fs';
 
 // Input text
 const textInput = `
-After great pain, a formal feeling comes
+After great pain, a formal feeling comes – (372)
 
 After great pain, a formal feeling comes –
 The Nerves sit ceremonious, like Tombs –
