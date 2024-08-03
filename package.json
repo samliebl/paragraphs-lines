@@ -1,6 +1,6 @@
 {
   "name": "paragraphs-lines",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Module that processes text and allows for analysis thereof by paragraphs and lines.",
   "main": "index.js",
   "type": "module",
