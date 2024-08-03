@@ -17,6 +17,8 @@ import { paragraphsLines } from 'paragraphs-lines';
 // by Emily Dickinson
 
 const textInput = `
+After great pain, a formal feeling comes
+
 After great pain, a formal feeling comes –
 The Nerves sit ceremonious, like Tombs –
 The stiff Heart questions ‘was it He, that bore,’
@@ -38,56 +40,7 @@ const result = paragraphsLines(textInput);
 console.log(JSON.stringify(result, null, 2));
 ```
 
-returns:
-
-```json
-{
-  "text": {
-    "textTitle": {
-      "titleText": "After great pain, a formal feeling comes –",
-      "titleData": {
-        "titleWordCount": 8,
-        "titleCharacterLength": 42
-      }
-    },
-    "textData": {
-      "textLineCount": 13,
-      "textWordCount": 83,
-      "textCharacterLength": 366
-    },
-    "textParagraphs": [
-      {
-        "paragraphIndex": 0,
-        "paragraphData": {
-          "paragraphLineCount": 4,
-          "paragraphWordCount": 29,
-          "paragraphCharacterLength": 168
-        },
-        "paragraphLines": [
-          {
-            "lineIndex": 0,
-            "lineText": "After great pain, a formal feeling comes –",
-            "lineData": {
-              "lineWordCount": 8,
-              "lineCharacterLength": 42
-            }
-          },
-          {
-            "lineIndex": 1,
-            "lineText": "The Nerves sit ceremonious, like Tombs –",
-            "lineData": {
-              "lineWordCount": 7,
-              "lineCharacterLength": 40
-            }
-          }
-          // {...}
-        ]
-      },
-      // { ... },
-    ]
-  }
-}
-```
+returns a JSON object w/ the text and data.
 
 ## License
 

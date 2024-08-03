@@ -1,119 +1,81 @@
-// paragraphs-lines.js
-export function paragraphsLines(textInput) {
-    // Trim the input to remove leading/trailing whitespace and split into lines
-    const lines = textInput.trim().split('\n');
-
-    // Filter out leading and trailing empty lines
-    let startIndex = 0;
-    let endIndex = lines.length - 1;
-    while (startIndex < lines.length && lines[startIndex].trim().length === 0) {
-        startIndex++;
-    }
-    while (endIndex >= 0 && lines[endIndex].trim().length === 0) {
-        endIndex--;
-    }
-
-    const trimmedLines = lines.slice(startIndex, endIndex + 1);
-
-    // First line as title
-    const title = trimmedLines[0];
-    const titleWordCount = title.split(/\s+/).length;
-    const titleCharacterLength = title.length;
-
-    const textData = {
-        textLineCount: 0,
-        textWordCount: 0,
-        textCharacterLength: textInput.replace(/\s/g, '').length
+export function paragraphsLines(text) {
+    const lines = text.trim().split('\n');
+    const textTitle = {
+        titleText: lines[0],
+        titleData: {
+            titleWordCount: lines[0].split(' ').length,
+            titleCharacterLength: lines[0].length
+        }
     };
 
-    const textParagraphs = [];
-    let currentParagraph = [];
-    let paragraphIndex = 0;
+    const paragraphs = [];
+    let paragraph = {
+        paragraphIndex: 0,
+        paragraphData: {
+            paragraphLineCount: 0,
+            paragraphWordCount: 0,
+            paragraphCharacterLength: 0
+        },
+        paragraphLines: []
+    };
 
-    trimmedLines.forEach((line, lineIndex) => {
-        const lineWordCount = line.trim().length === 0 ? 0 : line.split(/\s+/).length;
-        const lineCharacterLength = line.length;
+    let textLineCount = 0;
+    let textWordCount = 0;
+    let textCharacterLength = 0;
 
-        textData.textLineCount += 1;
-        textData.textWordCount += lineWordCount;
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i];
+        if (i === 1 && line.trim() === '') continue; // Skip the empty line after the title
 
-        if (line.trim().length === 0) {
-            if (currentParagraph.length > 0) {
-                const paragraphData = {
-                    paragraphLineCount: currentParagraph.length,
-                    paragraphWordCount: currentParagraph.reduce((acc, line) => acc + line.lineData.lineWordCount, 0),
-                    paragraphCharacterLength: currentParagraph.reduce((acc, line) => acc + line.lineData.lineCharacterLength, 0)
+        textLineCount++;
+        textWordCount += line.split(' ').length;
+        textCharacterLength += line.length;
+
+        if (line.trim() === '') {
+            if (paragraph.paragraphLines.length > 0) {
+                paragraphs.push(paragraph);
+                paragraph = {
+                    paragraphIndex: paragraphs.length,
+                    paragraphData: {
+                        paragraphLineCount: 0,
+                        paragraphWordCount: 0,
+                        paragraphCharacterLength: 0
+                    },
+                    paragraphLines: []
                 };
-
-                textParagraphs.push({
-                    paragraphIndex,
-                    paragraphData,
-                    paragraphLines: currentParagraph
-                });
-
-                currentParagraph = [];
-                paragraphIndex++;
             }
-
-            textParagraphs.push({
-                paragraphIndex,
-                paragraphData: {
-                    paragraphLineCount: 1,
-                    paragraphWordCount: 0,
-                    paragraphCharacterLength: 0
-                },
-                paragraphLines: [{
-                    lineIndex,
-                    lineText: null,
-                    lineData: {
-                        lineWordCount: 0,
-                        lineCharacterLength: 0
-                    }
-                }]
+            paragraph.paragraphLines.push({
+                lineIndex: textLineCount - 1,
+                lineText: null,
+                lineData: {
+                    lineWordCount: 0,
+                    lineCharacterLength: 0
+                }
             });
-
-            paragraphIndex++;
+            paragraph.paragraphData.paragraphLineCount++;
         } else {
-            currentParagraph.push({
-                lineIndex,
+            paragraph.paragraphLines.push({
+                lineIndex: textLineCount - 1,
                 lineText: line,
                 lineData: {
-                    lineWordCount,
-                    lineCharacterLength
+                    lineWordCount: line.split(' ').length,
+                    lineCharacterLength: line.length
                 }
             });
+            paragraph.paragraphData.paragraphLineCount++;
+            paragraph.paragraphData.paragraphWordCount += line.split(' ').length;
+            paragraph.paragraphData.paragraphCharacterLength += line.length;
         }
-
-        if (lineIndex === trimmedLines.length - 1 && currentParagraph.length > 0) {
-            const paragraphData = {
-                paragraphLineCount: currentParagraph.length,
-                paragraphWordCount: currentParagraph.reduce((acc, line) => acc + line.lineData.lineWordCount, 0),
-                paragraphCharacterLength: currentParagraph.reduce((acc, line) => acc + line.lineData.lineCharacterLength, 0)
-            };
-
-            textParagraphs.push({
-                paragraphIndex,
-                paragraphData,
-                paragraphLines: currentParagraph
-            });
-        }
-    });
+    }
+    if (paragraph.paragraphLines.length > 0) {
+        paragraphs.push(paragraph);
+    }
 
     return {
-        text: {
-            textTitle: {
-                titleText: title,
-                titleData: {
-                    titleWordCount,
-                    titleCharacterLength
-                }
-            },
-            textData: {
-                textLineCount: textData.textLineCount,
-                textWordCount: textData.textWordCount,
-                textCharacterLength: textData.textCharacterLength
-            },
-            textParagraphs
-        }
+        textTitle: textTitle,
+        textLineCount: textLineCount,
+        textWordCount: textWordCount,
+        textCharacterLength: textCharacterLength,
+        textParagraphs: paragraphs
     };
 }
